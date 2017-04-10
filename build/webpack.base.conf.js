@@ -11,6 +11,10 @@ var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
 var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 module.exports = {
   output: {
     path: config.build.assetsRoot,
@@ -21,6 +25,7 @@ module.exports = {
     extensions: ['', '.js', '.vue', '.json'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
+      '@': resolve('src'),
       'vue$': 'vue/dist/vue.common.js',
       'src': path.resolve(__dirname, '../src'),
       'example': path.resolve(__dirname, '../example'),
@@ -40,10 +45,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel',
-        include: [
-          path.join(projectRoot, 'src'),
-          path.join(projectRoot, 'example')
-        ],
+        include: [resolve('src'), resolve('test')],
         exclude: /node_modules/
       },
       {
